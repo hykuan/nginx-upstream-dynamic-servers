@@ -83,7 +83,7 @@ __DATA__
 
     resolver $TEST_NGINX_RESOLVER;
     upstream test_upstream {
-      server foo.blah resolve;
+      dynamic_server foo.blah;
     }
 --- config
     $TEST_NGINX_PRINT_UPSTREAMS_LOCATION
@@ -100,7 +100,7 @@ upstream test_upstream:
 
     resolver $TEST_NGINX_RESOLVER;
     upstream test_upstream {
-      server use.opendns.com resolve;
+      dynamic_server use.opendns.com;
     }
 --- config
     $TEST_NGINX_PRINT_UPSTREAMS_LOCATION
@@ -134,7 +134,7 @@ upstream test_upstream:
 
     resolver $TEST_NGINX_RESOLVER;
     upstream test_upstream {
-      server use.opendns.com:8080 resolve;
+      dynamic_server use.opendns.com:8080;
     }
 --- config
     $TEST_NGINX_PRINT_UPSTREAMS_LOCATION
@@ -168,7 +168,7 @@ upstream test_upstream:
 
     resolver $TEST_NGINX_RESOLVER;
     upstream test_upstream {
-      server 10.10.10.10 resolve;
+      dynamic_server 10.10.10.10;
     }
 --- config
     $TEST_NGINX_PRINT_UPSTREAMS_LOCATION
@@ -195,7 +195,7 @@ upstream test_upstream:
 
     resolver $TEST_NGINX_RESOLVER;
     upstream test_upstream {
-      server [fe80::0202:b3ff:fe1e:8329] resolve;
+      dynamic_server [fe80::0202:b3ff:fe1e:8329];
     }
 --- config
     $TEST_NGINX_PRINT_UPSTREAMS_LOCATION
@@ -222,7 +222,7 @@ upstream test_upstream:
 
     resolver $TEST_NGINX_RESOLVER;
     upstream test_upstream {
-      server [fe80::0202:b3ff:fe1e:8329]:8081 resolve;
+      dynamic_server [fe80::0202:b3ff:fe1e:8329]:8081;
     }
 --- config
     $TEST_NGINX_PRINT_UPSTREAMS_LOCATION
@@ -243,12 +243,12 @@ upstream test_upstream:
   addr = [fe80::0202:b3ff:fe1e:8329]:8081, weight = 1, fail_timeout = 10, max_fails = 1
 
 
-=== TEST 7: fails to start if the http level resolver is missing and a server is present
+=== TEST 7: fails to start if the http level resolver is missing and a dynamic_server is present
 --- http_config
     $TEST_NGINX_BASE_HTTP_CONF
 
     upstream test_upstream {
-      server use.opendns.com resolve;
+      dynamic_server use.opendns.com;
     }
 --- config
     $TEST_NGINX_PRINT_UPSTREAMS_LOCATION
@@ -256,7 +256,7 @@ upstream test_upstream:
 --- error_log
 resolver must be defined
 
-=== TEST 8: starts if the http level resolver is missing and a server is not present
+=== TEST 8: starts if the http level resolver is missing and a dynamic_server is not present
 --- http_config
     $TEST_NGINX_BASE_HTTP_CONF
 
@@ -278,7 +278,7 @@ upstream test_upstream:
 
     resolver $TEST_NGINX_RESOLVER;
     upstream test_upstream {
-      server use.opendns.com resolve;
+      dynamic_server use.opendns.com;
     }
 --- config
     $TEST_NGINX_PRINT_UPSTREAMS_LOCATION
@@ -307,7 +307,7 @@ upstream test_upstream:
 
     resolver $TEST_NGINX_RESOLVER;
     upstream test_upstream {
-      server use.opendns.com resolve;
+      dynamic_server use.opendns.com;
     }
 --- config
     $TEST_NGINX_PRINT_UPSTREAMS_LOCATION
@@ -350,7 +350,7 @@ upstream test_upstream:
 
     resolver $TEST_NGINX_RESOLVER;
     upstream test_upstream {
-      server foo.blah resolve;
+      dynamic_server foo.blah;
     }
 --- config
     $TEST_NGINX_PRINT_UPSTREAMS_LOCATION
@@ -379,7 +379,7 @@ upstream test_upstream:
 
     resolver $TEST_NGINX_RESOLVER;
     upstream test_upstream {
-      server foo.blah resolve;
+      dynamic_server foo.blah;
     }
 --- config
     $TEST_NGINX_PRINT_UPSTREAMS_LOCATION
@@ -410,7 +410,7 @@ upstream test_upstream:
 
     resolver $TEST_NGINX_RESOLVER;
     upstream test_upstream {
-      server use.opendns.com resolve;
+      dynamic_server use.opendns.com;
     }
 --- config
     $TEST_NGINX_PRINT_UPSTREAMS_LOCATION
@@ -454,7 +454,7 @@ upstream test_upstream:
 
     resolver $TEST_NGINX_RESOLVER;
     upstream test_upstream {
-      server multi.blah resolve;
+      dynamic_server multi.blah;
     }
 --- config
     $TEST_NGINX_PRINT_UPSTREAMS_LOCATION
@@ -485,8 +485,8 @@ upstream test_upstream:
 
     resolver $TEST_NGINX_RESOLVER;
     upstream test_upstream {
-      server use.opendns.com weight=4 max_fails=8 fail_timeout=7 resolve;
-      server 127.0.0.8 backup down resolve;
+      dynamic_server use.opendns.com weight=4 max_fails=8 fail_timeout=7;
+      dynamic_server 127.0.0.8 backup down;
     }
 --- config
     $TEST_NGINX_PRINT_UPSTREAMS_LOCATION
@@ -504,21 +504,21 @@ upstream test_upstream:
 
     resolver $TEST_NGINX_RESOLVER;
     upstream test_upstream {
-      server google.blah resolve;
-      server yahoo.blah resolve;
-      server bing.blah resolve;
+      dynamic_server google.blah;
+      dynamic_server yahoo.blah;
+      dynamic_server bing.blah;
     }
 
     upstream test_upstream2 {
-      server youtube.blah resolve;
-      server vimeo.blah resolve;
-      server netflix.blah resolve;
+      dynamic_server youtube.blah;
+      dynamic_server vimeo.blah;
+      dynamic_server netflix.blah;
     }
 
     upstream test_upstream3 {
-      server a.blah resolve;
-      server b.blah resolve;
-      server c.blah resolve;
+      dynamic_server a.blah;
+      dynamic_server b.blah;
+      dynamic_server c.blah;
     }
 --- config
     $TEST_NGINX_PRINT_UPSTREAMS_LOCATION
@@ -612,7 +612,7 @@ upstream test_upstream3:
     resolver $TEST_NGINX_RESOLVER;
     upstream test_upstream {
       keepalive 30;
-      server local.blah:1983 resolve;
+      dynamic_server local.blah:1983;
     }
 --- config
     $TEST_NGINX_PRINT_UPSTREAMS_LOCATION
@@ -653,32 +653,3 @@ upstream test_upstream:
   addr = 127.255.255.255:1983, weight = 1, fail_timeout = 10, down = true, max_fails = 1
 502
 --- timeout: 20s
-
-=== TEST 18: do not resolve the IP if the server isn't set to do it
---- http_config
-    $TEST_NGINX_BASE_HTTP_CONF
-
-    resolver $TEST_NGINX_RESOLVER;
-    upstream test_upstream {
-      server foo.blah;
-    }
---- config
-    $TEST_NGINX_PRINT_UPSTREAMS_LOCATION
-
-    location = /test {
-      content_by_lua '
-        ngx.sleep(2.1)
-        ngx.print(ngx.location.capture("/print-upstreams").body)
-        set_dns_records({"foo.blah 1 A 127.5.5.5"})
-        ngx.sleep(2.1)
-        ngx.print(ngx.location.capture("/print-upstreams").body)
-      ';
-    }
---- request
-    GET /test
---- response_body
-upstream test_upstream:
-  addr = 127.255.255.255:80, weight = 1, fail_timeout = 10, down = true, max_fails = 1
-upstream test_upstream:
-  addr = 127.255.255.255:80, weight = 1, fail_timeout = 10, down = true, max_fails = 1
---- timeout: 5s

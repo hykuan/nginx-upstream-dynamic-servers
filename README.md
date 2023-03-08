@@ -24,7 +24,7 @@ http {
   resolver 8.8.8.8;
 
   upstream example {
-    server example.com resolve;
+    dynamic_server example.com;
   }
 }
 ```
@@ -33,8 +33,8 @@ http {
 
 ### server
 
-**Syntax:** `server address [parameters];`  
-**Context** `upstream`
+**Syntax:** *dynamic_server address [parameters]*;  
+**Context** *upstream*
 
 Defines a server for an upstream. The module adds the ability to specify a `resolve` parameter. When specified:
 
@@ -43,12 +43,11 @@ Defines a server for an upstream. The module adds the ability to specify a `reso
 
 The following parameters can be used (see nginx's [server documentation](http://nginx.org/en/docs/http/ngx_http_upstream_module.html#server) for details):
 
-`weight=number`  
-`max_fails=number`  
-`fail_timeout=time`  
-`backup`  
-`down`  
-`resolve`  
+*weight=number*  
+*max_fails=number*  
+*fail_timeout=time*  
+*backup*  
+*down*  
 
 # Compatibility
 
