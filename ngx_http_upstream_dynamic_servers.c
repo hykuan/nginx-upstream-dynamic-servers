@@ -193,7 +193,7 @@ static char * ngx_http_upstream_dynamic_server_directive(ngx_conf_t *cf, ngx_com
         }
 
         // BEGIN CUSTOMIZATION: differs from default "server" implementation
-        if (ngx_strcmp(value[i].data, "resolve_dns") == 0) {
+        if (ngx_strcmp(value[i].data, "resolve") == 0) {
             // Determine if the server given is an IP address or a hostname by running
             // through ngx_parse_url with no_resolve enabled. Only if a hostname is given
             // will we add this to the list of dynamic servers that we will resolve again.
@@ -271,7 +271,7 @@ static char * ngx_http_upstream_dynamic_server_directive(ngx_conf_t *cf, ngx_com
 invalid:
 
     ngx_conf_log_error(NGX_LOG_EMERG, cf, 0,
-                       "invalid parameter \"%V\"", &value[i]);
+                       "invalid parameterrrrrrr \"%V\"", &value[i]);
 
     return NGX_CONF_ERROR;
 
